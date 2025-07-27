@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🗒️ Becoming Me – Notebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin:0; padding:40px;
+    font-family:'Shadows Into Light', cursive;
+    background:
+      url('https://i.imgur.com/7U9W5Dz.png') center/200px no-repeat,
+      repeating-linear-gradient(to bottom, #fff 0, #fff 30px, #def 30px, #def 31px);
+    background-size:auto 200px, 100% 31px;
+    position:relative; color:#333;
+  }
+  body::before {
+    content:''; position:absolute;
+    left:60px; top:0; bottom:0;
+    width:2px; background:#e74c3c;
+  }
+  .container { max-width:800px; margin:0 auto; padding-left:80px; }
+  h1 {
+    font-size:5rem; text-align:center;
+    margin:60px 0 40px; color:#555;
+  }
+  .nav {
+    position:absolute; top:60px; left:100px;
+    display:flex; gap:16px;
+  }
+  .nav a {
+    width:180px; padding:12px;
+    background:#ffe08a; border:1px dashed #c2a35b;
+    font-size:1.6rem; color:#333; text-decoration:none;
+    border-radius:4px; box-shadow:2px 2px 4px rgba(0,0,0,0.15);
+    transform:rotate(var(--r));
+    animation: idle-pulse 3s ease-in-out infinite;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .nav a:nth-child(1){--r:-2deg;}
+  .nav a:nth-child(2){--r:1.5deg;}
+  .nav a:nth-child(3){--r:-1.5deg;}
+  .nav a:nth-child(4){--r:2deg;}
+  .nav a:hover {
+    animation:none;
+    animation: wiggle 0.5s;
+    box-shadow:4px 4px 8px rgba(0,0,0,0.2);
+  }
+  @keyframes wiggle {
+    0%,100%{transform:rotate(0deg) scale(1);}
+    25%{transform:rotate(-2deg) scale(1.05);}
+    50%{transform:rotate(2deg) scale(1.05);}
+    75%{transform:rotate(-2deg) scale(1.05);}
+  }
+  @keyframes idle-pulse {
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.02);}
+  }
+  .homework {
+    position:absolute; top:60px; right:60px;
+    width:240px;
+  }
+  .homework h2 {
+    font-size:2rem; margin-bottom:12px;
+    border-bottom:2px dashed #c2a35b;
+  }
+  .tasks {
+    font-size:1.4rem; line-height:2rem;
+    list-style:none; padding:0;
+  }
+  .tasks li {
+    position:relative; margin:10px 0;
+    padding-left:32px; cursor:pointer;
+    transition:opacity .3s, transform .3s;
+  }
+  .tasks li::before {
+    content:'📝'; position:absolute; left:0; top:0;
+  }
+  .tasks li:hover {
+    transform:scale(1.03);
+  }
+  .tasks li.done {
+    text-decoration:line-through; opacity:0.5;
+    animation: task-wiggle 0.5s;
+  }
+  @keyframes task-wiggle {
+    0%,100%{transform:rotate(0deg);}
+    25%{transform:rotate(-1deg);}
+    75%{transform:rotate(1deg);}
+  }
+</style>
+</head>
+<body>
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="diet.html">Diet</a>
+    <a href="exercises.html">Exercises</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="container">
+    <h1>BECOMING ME</h1>
+  </div>
+
+  <div class="homework">
+    <h2>HOMEWORK</h2>
+    <ul class="tasks" id="tasks">
+      <li>10 Push‑ups</li>
+      <li>10 Pull‑ups</li>
+      <li>10 Squats</li>
+    </ul>
+  </div>
+
+  <script>
+    document.querySelectorAll('#tasks li').forEach(li =>
+      li.addEventListener('click', () => li.classList.toggle('done'))
+    );
+  </script>
+</body>
+</html>

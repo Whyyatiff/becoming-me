@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Big Bold Notebook Workout – All Muscle Groups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;padding:20px;font-family:'Poppins',sans-serif;background:linear-gradient(to bottom,white 30px,#00b0d7 1px) repeat-y;background-size:100% 31px;position:relative;color:#333;}
+    body::before{content:'';position:absolute;top:0;bottom:0;left:140px;width:2px;background:#db4034;}
+    h1{font-family:'Montserrat',sans-serif;font-size:3rem;color:#8e44ad;text-align:center;}
+    select{font-size:1.5rem;padding:10px;margin:20px auto;display:block;}
+    .exercise{background:#fff;padding:20px;margin:20px 0;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);display:flex;flex-wrap:wrap;}
+    .exercise img{width:250px;height:auto;border-radius:4px;margin-right:20px;}
+    .exercise-content{flex:1;}
+    .exercise-content h3{font-size:1.8rem;margin:0;color:#34495e;}
+    .tip{background:#e8f0fe;padding:10px;margin-top:12px;border-left:4px solid #4285f4;font-size:1.2rem;}
+  </style>
+</head>
+<body>
+  <h1>📝 Exercises Notebook – All Muscle Groups</h1>
+  <select id="muscleGroup">
+    <option value="chest">Chest</option>
+    <option value="back">Back</option>
+    <option value="shoulders">Shoulders</option>
+    <option value="biceps">Biceps</option>
+    <option value="triceps">Triceps</option>
+    <option value="quads">Quads</option>
+    <option value="hamstrings">Hamstrings</option>
+    <option value="glutes">Glutes</option>
+    <option value="calves">Calves</option>
+    <option value="abs">Abs</option>
+  </select>
+  <div id="exercises"></div>
+
+  <script>
+    const placeholder = 'https://via.placeholder.com/250';
+    const data = {
+      chest: [
+        {name:'Barbell Bench Press (Gym)',tip:'Keep feet flat and press evenly.'},
+        {name:'Incline Dumbbell Press (Gym)',tip:'Press up and slightly back.'},
+        {name:'Decline Bench Press (Gym)',tip:'Tuck chin and squeeze pecs.'},
+        {name:'Dumbbell Fly (Gym)',tip:'Maintain slight elbow bend.'},
+        {name:'Cable Chest Press (Gym)',tip:'Press through chest not arms.'},
+        {name:'Machine Chest Press (Gym)',tip:'Align handles at chest level.'},
+        {name:'Pec Deck Fly (Gym)',tip:'Squeeze at midline.'},
+        {name:'Chest Dips (Gym)',tip:'Lean forward for pec focus.'},
+        {name:'Landmine Press (Gym)',tip:'Keep core locked.'},
+        {name:'Smith Incline Press (Gym)',tip:'Bar path slightly arcing.'},
+        {name:'Dumbbell Pullover (Gym)',tip:'Stretch lats, engage chest.'},
+        {name:'Close Grip Bench (Gym)',tip:'Hands under elbows.'},
+        {name:'Incline Cable Fly (Gym)',tip:'Lead with palms.'},
+        {name:'Guillotine Press (Gym)',tip:'Lower bar high on chest.'},
+        {name:'Push-Up (Home)',tip:'Keep core tight.'},
+        {name:'Wide Push-Up (Home)',tip:'Wider than shoulders.'},
+        {name:'Diamond Push-Up (Home)',tip:'Elbows close to body.'},
+        {name:'Decline Push-Up (Home)',tip:'Feet elevated.'},
+        {name:'Incline Push-Up (Home)',tip:'Hands elevated.'},
+        {name:'Plyo Push-Up (Home)',tip:'Explosive press.'},
+      ],
+      back: [
+        {name:'Deadlift (Gym)',tip:'Keep spine neutral.'},
+        {name:'Bent-over Row (Gym)',tip:'Pull to hip.'},
+        {name:'T-Bar Row (Gym)',tip:'Chest up.'},
+        {name:'Seated Cable Row (Gym)',tip:'Retract shoulder blades.'},
+        {name:'Lat Pulldown (Gym)',tip:'Lead elbows down.'},
+        {name:'Pull-Up (Gym)',tip:'Full range of motion.'},
+        {name:'Chin-Up (Gym)',tip:'Underhand grip.'},
+        {name:'Pendlay Row (Gym)',tip:'Back parallel.'},
+        {name:'Single-Arm DB Row (Gym)',tip:'Brace core.'},
+        {name:'Machine Row (Gym)',tip:'Chest stays on pad.'},
+        {name:'Inverted Row (Home)',tip:'Body straight.'},
+        {name:'Band Row (Home)',tip:'Elbows tight.'},
+        {name:'Superman (Home)',tip:'Lift chest and legs.'},
+        {name:'Reverse Snow Angel (Home)',tip:'Thumbs up.'},
+        {name:'Door-Frame Row (Home)',tip:'Walk feet to adjust.'},
+        {name:'Towel Row (Home)',tip:'Secure towel ends.'},
+        {name:'Back Ext. on Floor (Home)',tip:'Lift from lower back.'},
+        {name:'Bird Dog (Home)',tip:'Opposite arm-leg.'},
+        {name:'Prone Y Raises (Home)',tip:'Lift thumbs high.'},
+        {name:'Table Pull-Up (Home)',tip:'Feet on floor.'},
+      ],
+      shoulders: [
+        {name:'Overhead Press (Gym)',tip:'Drive straight up.'},
+        {name:'Arnold Press (Gym)',tip:'Rotate for full delt hit.'},
+        {name:'Push Press (Gym)',tip:'Use leg drive.'},
+        {name:'Upright Row (Gym)',tip:'Pull elbows high.'},
+        {name:'Cable Face Pull (Gym)',tip:'Squeeze blades.'},
+        {name:'Lateral Raise (Gym)',tip:'Lead with elbows.'},
+        {name:'Front Raise (Gym)',tip:'Raise to eye level.'},
+        {name:'Rear Delt Fly (Gym)',tip:'Pinch blades.'},
+        {name:'Seated DB Press (Gym)',tip:'Hands slightly in front.'},
+        {name:'Landmine Press (Gym)',tip:'Brace core.'},
+        {name:'Pike Push-Up (Home)',tip:'Hips high.'},
+        {name:'Handstand Push-Up (Home)',tip:'Use wall support.'},
+        {name:'Band Press (Home)',tip:'Stand on band.'},
+        {name:'Home Lateral Raise (Home)',tip:'Slow and steady.'},
+        {name:'Home Front Raise (Home)',tip:'Use bottles.'},
+        {name:'Bent-Over DB Raise (Home)',tip:'Pinch blades.'},
+        {name:'Pike-to-Submarine (Home)',tip:'Rotate body.'},
+        {name:'Reverse Plank Dip (Home)',tip:'Lower hips.'},
+        {name:'Doorway Y Raise (Home)',tip:'Thumbs up.'},
+        {name:'Arm Circles (Home)',tip:'Controlled large circles.'},
+      ],
+      biceps: [
+        {name:'Barbell Curl (Gym)',tip:'Elbows by sides.'},
+        {name:'Incline DB Curl (Gym)',tip:'Stretch at bottom.'},
+        {name:'Hammer Curl (Gym)',tip:'Neutral grip.'},
+        {name:'Preacher Curl (Gym)',tip:'Full lockout.'},
+        {name:'Cable Curl (Gym)',tip:'Constant tension.'},
+        {name:'Concentration Curl (Gym)',tip:'Isolate bicep.'},
+        {name:'EZ Bar Curl (Gym)',tip:'Wrist-friendly grip.'},
+        {name:'Chin-Up (Gym)',tip:'Underhand grip.'},
+        {name:'Cable Drag Curl (Gym)',tip:'Arm path close.'},
+        {name:'Reverse Curl (Gym)',tip:'Target forearms.'},
+        {name:'Diamond Push-Up (Home)',tip:'Targets biceps/triceps.'},
+        {name:'One-Arm DB Curl (Home)',tip:'Control swing.'},
+        {name:'Resistance Band Curl (Home)',tip:'Slow return.'},
+        {name:'Doorway Curl (Home)',tip:'Use towel.'},
+        {name:'Inverted Bicep Curl (Home)',tip:'Underhand pull.'},
+        {name:'Towel Curl (Home)',tip:'Rigged towel loop.'},
+        {name:'Isometric Curl Hold (Home)',tip:'Hold halfway.'},
+        {name:'One-Arm Chin-Up (Home)',tip:'Progress slowly.'},
+        {name:'Reverse Hand Push-Up (Home)',tip:'Fingers back.'},
+        {name:'Side Plank Curl (Home)',tip:'Body steady.'},
+      ],
+      triceps: [
+        {name:'Close Grip Bench (Gym)',tip:'Hands under elbows.'},
+        {name:'Tricep Dips (Gym)',tip:'Lean forward.'},
+        {name:'Skullcrusher (Gym)',tip:'Lower bar to forehead.'},
+        {name:'Cable Pushdown (Gym)',tip:'Elbows locked.'},
+        {name:'Overhead Ext (Gym)',tip:'Keep elbows still.'},
+        {name:'Diamond Push-Up (Gym)',tip:'Hands together.'},
+        {name:'Rope Pushdown (Gym)',tip:'Spread at end.'},
+        {name:'Bench Dip (Gym)',tip:'Feet elevated.'},
+        {name:'JM Press (Gym)',tip:'Bar to lower chest.'},
+        {name:'Kickback (Gym)',tip:'Elbow up.'},
+        {name:'Chair Dip (Home)',tip:'Feet on floor.'},
+        {name:'Overhead Band Ext (Home)',tip:'Stretch band overhead.'},
+        {name:'DB Kickback (Home)',tip:'Elbow by hip.'},
+        {name:'Floor Skullcrusher (Home)',tip:'Use light weight.'},
+        {name:'Close Push-Up (Home)',tip:'Hands under chest.'},
+        {name:'Tricep Press-Up (Home)',tip:'Elbows tight.'},
+        {name:'Lying Band Ext (Home)',tip:'Band overhead.'},
+        {name:'Bench Tricep Dip (Home)',tip:'Feet on floor.'},
+        {name:'Kickback (Home)',tip:'Control return.'},
+        {name:'Overhead DB Ext (Home)',tip:'Keep elbows in.'},
+        {name:'Diamond Push-Up (Home)',tip:'Same as gym one.'},
+      ],
+      quads: [
+        {name:'Squat (Gym)',tip:'Knees track toes.'},
+        {name:'Front Squat (Gym)',tip:'Keep chest upright.'},
+        {name:'Leg Press (Gym)',tip:'Feet mid platform.'},
+        {name:'Lunge (Gym)',tip:'Knee over ankle.'},
+        {name:'Bulgarian Split (Gym)',tip:'Back foot elevated.'},
+        {name:'Hack Squat (Gym)',tip:'Back flat.'},
+        {name:'Machine Leg Ext (Gym)',tip:'Pause at top.'},
+        {name:'Goblet Squat (Gym)',tip:'Chest stays tall.'},
+        {name:'Smith Squat (Gym)',tip:'Feet forward.'},
+        {name:'Step-Up (Gym)',tip:'Drive through heel.'},
+        {name:'Bodyweight Squat (Home)',tip:'Chest up.'},
+        {name:'Walking Lunge (Home)',tip:'Stride controlled.'},
+        {name:'Reverse Lunge (Home)',tip:'Step back softly.'},
+        {name:'Wall Sit (Home)',tip:'Thighs parallel.'},
+        {name:'Jump Squat (Home)',tip:'Soft landing.'},
+        {name:'Bulgarian Split (Home)',tip:'Use chair.'},
+        {name:'Step-Up (Home)',tip:'Use stable ledge.'},
+        {name:'Cossack Squat (Home)',tip:'Feet wide.'},
+        {name:'Pistol Squat (Home)',tip:'Use support.'},
+        {name:'Sissy Squat (Home)',tip:'Lean back.'},
+      ],
+      hamstrings: [
+        {name:'Deadlift (Gym)',tip:'Hinge at hips.'},
+        {name:'Romanian DL (Gym)',tip:'Soft knees.'},
+        {name:'Leg Curl (Gym)',tip:'Full flexion.'},
+        {name:'Good Morning (Gym)',tip:'Back neutral.'},
+        {name:'Glute-Ham Raise (Gym)',tip:'Control descent.'},
+        {name:'Sumo DL (Gym)',tip:'Wide stance.'},
+        {name:'Stiff-Leg DL (Gym)',tip:'No bounce.'},
+        {name:'Nordic Ham Curl (Home)',tip:'Partner hold feet.'},
+        {name:'Single-Leg DL (Home)',tip:'Balance steady.'},
+        {name:'Banded Leg Curl (Home)',tip:'Anchor band.'},
+        {name:'Floor Hip Bridge (Home)',tip:'Thrust from heel.'},
+        {name:'Single-Leg Bridge (Home)',tip:'Other leg up.'},
+        {name:'Sliding Leg Curl (Home)',tip:'Use towel on tile.'},
+        {name:'Reverse Nordic (Home)',tip:'Knees bend back.'},
+        {name:'Inchworm to Hamstring (Home)',tip:'Walk in then out.'},
+        {name:'Glute Bridge Walk-Out (Home)',tip:'Control out.'},
+        {name:'Straight-Leg Deadlift (Home)',tip:'Back flat.'},
+        {name:'Chair RDL (Home)',tip:'Use chair support.'},
+        {name:'Single-Leg Curl (Home)',tip:'Use band.'},
+        {name:'Swiss Ball Curl (Home)',tip:'Use stability ball.'},
+      ],
+      glutes: [
+        {name:'Hip Thrust (Gym)',tip:'Bar on hips.'},
+        {name:'Glute Bridge (Gym)',tip:'Push through heels.'},
+        {name:'Back Squat (Gym)',tip:'Drive knees out.'},
+        {name:'Bulgarian Split (Gym)',tip:'Keep torso vertical.'},
+        {name:'Cable Kickback (Gym)',tip:'Squeeze at top.'},
+        {name:'Sumo Deadlift (Gym)',tip:'Knees out.'},
+        {name:'Leg Press (Gym)',tip:'High foot placement.'},
+        {name:'Smith Hip Thrust (Gym)',tip:'Feet flat.'},
+        {name:'Walking Lunge (Gym)',tip:'Long stride.'},
+        {name:'Good Morning (Gym)',tip:'Hips back.'},
+        {name:'Hip Thrust (Home)',tip:'Use couch edge.'},
+        {name:'Glute Bridge (Home)',tip:'Hold at top.'},
+        {name:'Donkey Kick (Home)',tip:'Drive heel up.'},
+        {name:'Fire Hydrant (Home)',tip:'Keep knee bent.'},
+        {name:'Single-Leg Bridge (Home)',tip:'Other leg up.'},
+        {name:'Clamshell (Home)',tip:'Feet together.'},
+        {name:'Banded Walk (Home)',tip:'Keep tension.'},
+        {name:'Step-Up (Home)',tip:'Drive through heel.'},
+        {name:'Reverse Lunge (Home)',tip:'Step back softly.'},
+        {name:'Pistol to Box (Home)',tip:'Use box for support.'},
+      ],
+      calves: [
+        {name:'Standing Calf Raise (Gym)',tip:'Full ROM.'},
+        {name:'Seated Calf Raise (Gym)',tip:'Ball under feet.'},
+        {name:'Leg Press Calf Raise (Gym)',tip:'Legs straight.'},
+        {name:'Smith Calf Raise (Gym)',tip:'Feet platform edge.'},
+        {name:'Donkey Calf Raise (Gym)',tip:'Partner on low back.'},
+        {name:'Single-Leg Calf Raise (Gym)',tip:'Use DB.'},
+        {name:'Jump Rope (Gym)',tip:'Ball of foot.'},
+        {name:'Tibialis Raise (Gym)',tip:'Lift toes.'},
+        {name:'Farmer’s Walk on Toes (Gym)',tip:'Walk tall.'},
+        {name:'Box Jump (Gym)',tip:'Land softly.'},
+        {name:'Standing Calf Raise (Home)',tip:'Edge of stair.'},
+        {name:'Single-Leg Calf Raise (Home)',tip:'Hold wall.'},
+        {name:'Seated Calf Raise (Home)',tip:'Use weight on knees.'},
+        {name:'Jump Rope (Home)',tip:'On toes.'},
+        {name:'Toe Walk (Home)',tip:'Walk on balls.'},
+        {name:'Calf Stair Stretch (Home)',tip:'Stretch between reps.'},
+        {name:'Heel Drop (Home)',tip:'Lower heel below step.'},
+        {name:'Tibialis Raise (Home)',tip:'Lift toes against wall.'},
+        {name:'Side-to-Side Jump (Home)',tip:'Landing soft.'},
+        {name:'Ankle ABCs (Home)',tip:'Draw alphabet.'},
+      ],
+      abs: [
+        {name:'Front Plank (Gym)',tip:'Straight line.'},
+        {name:'Hanging Leg Raise (Gym)',tip:'No swing.'},
+        {name:'Cable Crunch (Gym)',tip:'Shoulders down.'},
+        {name:'Ab Wheel Rollout (Gym)',tip:'Keep spine neutral.'},
+        {name:'Decline Sit-Up (Gym)',tip:'Control on way down.'},
+        {name:'Russian Twist (Gym)',tip:'Twist thoracic.'},
+        {name:'Side Plank (Gym)',tip:'Stack hips.'},
+        {name:'Mountain Climbers (Gym)',tip:'Core tight.'},
+        {name:'Reverse Crunch (Gym)',tip:'Curl pelvis.'},
+        {name:'Cable Woodchop (Gym)',tip:'Rotate fully.'},
+        {name:'Dead Bug (Home)',tip:'Back pressed.'},
+        {name:'Bicycle Crunch (Home)',tip:'Twist ribs.'},
+        {name:'Leg Raise (Home)',tip:'Controlled.'},
+        {name:'Plank (Home)',tip:'Elbows under shoulders.'},
+        {name:'Side Plank (Home)',tip:'Lift hips.'},
+        {name:'Heel Touch (Home)',tip:'Side crunch.'},
+        {name:'Flutter Kick (Home)',tip:'Toes near floor.'},
+        {name:'Bird Dog (Home)',tip:'Opposite limbs.'},
+        {name:'V-Up (Home)',tip:'Touch feet.'},
+        {name:'Reverse Plank (Home)',tip:'Lift hips.'},
+      ]
+    };
+
+    const sel = document.getElementById('muscleGroup'),
+          out = document.getElementById('exercises');
+    function render() {
+      out.innerHTML = '';
+      data[sel.value].forEach(item=>{
+        out.innerHTML += `
+        <div class="exercise">
+          <img src="${placeholder}" alt="${item.name}">
+          <div class="exercise-content">
+            <h3>${item.name}</h3>
+            <div class="tip">💡 Tip: ${item.tip}</div>
+          </div>
+        </div>`;
+      });
+    }
+    sel.addEventListener('change', render);
+    render();
+  </script>
+</body>
+</html>

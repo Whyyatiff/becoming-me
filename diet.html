@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>📓 Personalized Diet Notebook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin:0; padding:20px;
+      font-family:'Comic Neue', cursive;
+      background: linear-gradient(to bottom, white 30px, #add8e6 1px) repeat-y;
+      background-size:100% 31px;
+      position:relative;
+      color:#333;
+    }
+    body::before {
+      content:'';
+      position:absolute; top:0; bottom:0; left:100px;
+      width:3px;
+      background:#f39c12;
+    }
+    .container {
+      margin-left:130px;
+      max-width:700px;
+    }
+    h1 {
+      font-size:3rem; /* bigger heading */
+      color:#2c3e50;
+      text-align:center;
+      margin-bottom:1rem;
+    }
+    label {
+      display:block;
+      margin:10px 0;
+      font-size:1.6rem; /* larger label font */
+    }
+    input, select {
+      font-size:1.4rem; /* more readable inputs */
+      padding:6px;
+      width:160px;
+    }
+    button {
+      margin-top:16px;
+      padding:10px 20px;
+      font-size:1.6rem; /* larger button */
+      background:#27ae60;
+      color:#fff;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    }
+    .box {
+      margin:24px 0;
+      padding:16px;
+      border-left:6px solid #2980b9;
+      background:#fffbea;
+    }
+    .box h2 {
+      margin:0 0 8px;
+      font-size:2rem; /* bigger section headings */
+    }
+    .nutri {
+      margin:6px 0;
+      font-size:1.4rem; /* bigger text for clarity */
+    }
+    .meal-items {
+      margin-left:28px;
+      font-size:1.4rem; /* larger list items */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📓 Your Personalized Diet Plan</h1>
+    <label>Age: <input type="number" id="age" min="10" max="70"></label>
+    <label>Weight (kg): <input type="number" id="wt" min="30" max="120"></label>
+    <label>Height (cm): <input type="number" id="ht" min="120" max="210"></label>
+    <label>Activity:
+      <select id="activity">
+        <option value="1.2">Sedentary</option>
+        <option value="1.4">Light</option>
+        <option value="1.6">Moderate</option>
+        <option value="1.8">Active</option>
+      </select>
+    </label>
+    <button onclick="createPlan()">Create My Plan</button>
+    <div id="plan"></div>
+  </div>
+
+  <script>
+  function createPlan(){
+    const age = +document.getElementById('age').value;
+    const wt = +document.getElementById('wt').value;
+    const ht = +document.getElementById('ht').value;
+    const act = +document.getElementById('activity').value;
+    if (!age || !wt || !ht) { return alert('Please fill in all fields 😊'); }
+
+    const bmr = 10*wt + 6.25*ht - 5*age + 5;
+    const tdee = Math.round(bmr * act);
+
+    const protPerKg = age<=12 ? 1.1 : age<=18 ? 1.0 : age<=60 ? 0.9 : 0.9;
+    const prot = Math.round(wt * protPerKg);
+    const carbs = Math.round(tdee * 0.55 / 4);
+    const fats = Math.round(tdee * 0.25 / 9);
+
+    const meals = [
+      {
+        name:'Breakfast',
+        items:[
+          {food:`${Math.round(wt/10)} Chapati`,prot:2*wt/10,carbs:25*wt/10,fat:2},
+          {food:'Mixed Veg Sabzi',prot:3,carbs:10,fat:4},
+          {food:'Milk (200 ml)',prot:6,carbs:10,fat:5}
+        ],
+        reason: 'Whole grains + veg + calcium & vitamins.'
+      },
+      {
+        name:'Mid-morning',
+        items:[
+          {food:'Seasonal Fruit',prot:1,carbs:25,fat:0},
+          {food:'10 g Almonds',prot:3,carbs:2,fat:7}
+        ],
+        reason: 'Natural energy, fiber & healthy fats.'
+      },
+      {
+        name:'Lunch',
+        items:[
+          {food:`${Math.round(wt/10)} Roti`,prot:2*wt/10,carbs:25*wt/10,fat:2},
+          {food:'1 cup Dal',prot:8,carbs:20,fat:2},
+          {food:'Veg Sabzi',prot:3,carbs:10,fat:4}
+        ],
+        reason: 'Balanced meals rich in protein, fibre & phytonutrients.'
+      },
+      {
+        name:'Evening Snack',
+        items:[
+          {food:'Sprouts Salad (1 cup)',prot:6,carbs:12,fat:2}
+        ],
+        reason: 'Protein-rich plant snack to stave off hunger.'
+      },
+      {
+        name:'Dinner',
+        items:[
+          {food:`${Math.round(wt/10)} Chapati`,prot:2*wt/10,carbs:25*wt/10,fat:2},
+          {food:'Lean Curry (chicken/tofu)',prot:10,carbs:5,fat:8},
+          {food:'Fresh Salad',prot:1,carbs:5,fat:0}
+        ],
+        reason: 'Light dinner high in protein & easy to digest.'
+      }
+    ];
+
+    const container = document.getElementById('plan');
+    container.innerHTML = `
+      <div class="box">
+        <h2>Daily Targets</h2>
+        <p class="nutri">Calories: <b>${tdee}</b> kcal</p>
+        <p class="nutri">Protein: <b>${prot}</b> g | Carbs: <b>${carbs}</b> g | Fats: <b>${fats}</b> g</p>
+      </div>`;
+
+    meals.forEach(m => {
+      const mb = document.createElement('div');
+      mb.className = 'box';
+      let html = `<h2>${m.name}</h2><ul class="meal-items">`;
+      let pm=0, cm=0, fm=0;
+      m.items.forEach(item => {
+        html += `<li>${item.food} → P:${item.prot}g C:${item.carbs}g F:${item.fat}g</li>`;
+        pm += item.prot; cm += item.carbs; fm += item.fat;
+      });
+      html += `</ul><p class="nutri">Meal Totals → P:${pm}g C:${cm}g F:${fm}g</p>`;
+      html += `<p class="nutri">Why? ${m.reason}</p>`;
+      mb.innerHTML = html;
+      container.appendChild(mb);
+    });
+  }
+  </script>
+</body>
+</html>
