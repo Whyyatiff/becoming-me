@@ -10,7 +10,6 @@
     h1{font-family:'Montserrat',sans-serif;font-size:3rem;color:#8e44ad;text-align:center;}
     select{font-size:1.5rem;padding:10px;margin:20px auto;display:block;}
     .exercise{background:#fff;padding:20px;margin:20px 0;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);display:flex;flex-wrap:wrap;}
-    .exercise img{width:250px;height:auto;border-radius:4px;margin-right:20px;}
     .exercise-content{flex:1;}
     .exercise-content h3{font-size:1.8rem;margin:0;color:#34495e;}
     .tip{background:#e8f0fe;padding:10px;margin-top:12px;border-left:4px solid #4285f4;font-size:1.2rem;}
@@ -33,7 +32,6 @@
   <div id="exercises"></div>
 
   <script>
-    const placeholder = 'https://via.placeholder.com/250';
     const data = {
       chest: [
         {name:'Barbell Bench Press (Gym)',tip:'Keep feet flat and press evenly.'},
@@ -265,7 +263,6 @@
       data[sel.value].forEach(item=>{
         out.innerHTML += `
         <div class="exercise">
-          <img src="${placeholder}" alt="${item.name}">
           <div class="exercise-content">
             <h3>${item.name}</h3>
             <div class="tip">💡 Tip: ${item.tip}</div>
