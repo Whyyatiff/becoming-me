@@ -244,3 +244,22 @@ video {
     padding: 2rem;
   }
 }
+
+/* Base mobile styles */
+.flex-item {
+  width: 100%;
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .flex-item {
+    width: 50%;
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .flex-item {
+    width: 33.33%;
+  }
+}
