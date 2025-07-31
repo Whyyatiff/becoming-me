@@ -108,6 +108,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Responsive body class for narrow screens
+window.addEventListener('resize', () => {
+  const isNarrow = window.innerWidth < 600;
+  document.body.classList.toggle('narrow', isNarrow);
+});
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Smooth scroll setup
