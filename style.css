@@ -1,3 +1,5 @@
+body.narrow nav { display: none; }
+
 @import url('https://fonts.cdnfonts.com/css/orbitron'); /* Orbitron font :contentReference[oaicite:8]{index=8} */
 
 :root {
@@ -77,7 +79,7 @@ img {
   position:absolute; inset:0;
   background: url('') no-repeat center center;
   pointer-events:none;
-  animation: smokeAnim 6s infinite ease-in-out;
+  animation:smokeAnim 6s infinite ease-in-out;
 }
 
 @keyframes smokeAnim {
@@ -214,7 +216,6 @@ video {
 }
 
 /* Base mobile styles here */
-
 .hero-title {
   font-size: 4rem;
 }
