@@ -200,3 +200,37 @@ video {
   .sidebar.left { left:50%; transform:translateX(-50%); }
   .sidebar.right { right:auto; }
 }
+
+/* Base mobile styles here */
+
+.hero-title {
+  font-size: 4rem;
+}
+.hero-sub {
+  font-size: 1.2rem;
+}
+.form-card {
+  width: 95vw;
+  padding: 1rem;
+}
+
+@media (min-width: 400px) {
+  /* Larger phone */
+  .hero-title {
+    font-size: 6rem;
+  }
+  .form-card {
+    width: 90vw;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Tablet and up */
+  .hero-title {
+    font-size: 12rem;
+  }
+  .form-card {
+    width: 350px;
+    padding: 2rem;
+  }
+}
