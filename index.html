@@ -1,189 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🗒️ Becoming Me – Notebook</title>
   <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    /* Theme color variables */
+    :root, [data-theme="light"] {
+      --bg: #fff;
+      --text: #333;
+      --accent: #ffe08a;
+      --card-bg: rgba(255,255,255,0.9);
+    }
+    [data-theme="dark"] {
+      --bg: #2b2b2b;
+      --text: #eee;
+      --accent: #4dabf7;
+      --card-bg: rgba(43,43,43,0.9);
     }
 
+    /* Base styling */
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 20px;
       font-family: 'Shadows Into Light', cursive;
-      background: repeating-linear-gradient(to bottom, #fff 0, #fff 30px, #def 30px, #def 31px);
+      background: var(--bg);
+      color: var(--text);
+      background-image: repeating-linear-gradient(to bottom, var(--bg) 0, var(--bg) 30px, #def 30px, #def 31px);
       background-size: 100% 31px;
-      position: relative;
-      color: #333;
+      transition: background 0.3s, color 0.3s;
     }
 
-    body::before {
+    /* Toggle switch */
+    .theme-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .theme-switch input {
+      display: none;
+    }
+    .theme-switch .slider {
+      width: 40px; height: 20px;
+      background: #ccc;
+      border-radius: 12px;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .theme-switch .slider::before {
       content: '';
       position: absolute;
-      left: 40px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: #e74c3c;
+      width: 18px; height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 1px; left: 1px;
+      transition: transform 0.3s;
+    }
+    .theme-switch input:checked + .slider {
+      background: var(--accent);
+    }
+    .theme-switch input:checked + .slider::before {
+      transform: translateX(20px);
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 20px;
+    /* Container and nav styling */
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; background: var(--card-bg); border-radius: 8px; }
+    h1 { font-size: 3rem; text-align: center; margin: 40px 0 20px; color: var(--text); }
+    .nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .nav a { flex: 1 1 40%; max-width: 180px; padding: 12px; background: var(--accent); color: var(--text); text-decoration: none; text-align: center; border-radius: 4px; transform: rotate(var(--r)); transition: transform 0.3s; }
+    .nav a:nth-child(1){--r:-2deg;} .nav a:nth-child(2){--r:1.5deg;} .nav a:nth-child(3){--r:-1.5deg;} .nav a:nth-child(4){--r:2deg;}
+    .nav a:hover { animation: wiggle 0.5s; }
+    @keyframes wiggle { 0%,100%{transform:rotate(0);}25%{transform:rotate(-2deg) scale(1.05);}50%{transform:rotate(2deg) scale(1.05);}75%{transform:rotate(-2deg) scale(1.05);} }
+
+    .homework { margin-top: 40px; padding: 16px; border: 1px dashed var(--accent); border-radius:8px; }
+    .homework h2 { font-size:1.6rem; margin-bottom:12px; border-bottom:2px dashed var(--accent); }
+    .tasks { font-size:1.4rem; line-height:2rem; list-style:none; padding:0; }
+    .tasks li { position: relative; margin: 10px 0; padding-left:32px; cursor: pointer; transition: opacity .3s, transform .3s; }
+    .tasks li::before { content:'📝'; position:absolute; left:0; top:0; }
+    .tasks li:hover { transform: scale(1.03); }
+    .tasks li.done { opacity:0.5; text-decoration: line-through; animation: wiggle 0.5s; }
+
+    /* Responsive tweaks */
+    @media(max-width:600px) {
+      body {padding:15px;}
+      h1 {font-size:2.2rem;}
+      .nav a {font-size:1rem;padding:10px;}
+      .tasks {font-size:1.2rem;}
     }
 
-    h1 {
-      font-size: 3rem;
-      text-align: center;
-      margin: 40px 0 20px;
-      color: #555;
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .nav a {
-      flex: 1 1 40%;
-      max-width: 180px;
-      padding: 12px;
-      background: #ffe08a;
-      border: 1px dashed #c2a35b;
-      font-size: 1.2rem;
-      color: #333;
-      text-decoration: none;
-      border-radius: 4px;
-      text-align: center;
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-      transform: rotate(var(--r));
-      animation: idle-pulse 3s ease-in-out infinite;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .nav a:nth-child(1) { --r: -2deg; }
-    .nav a:nth-child(2) { --r: 1.5deg; }
-    .nav a:nth-child(3) { --r: -1.5deg; }
-    .nav a:nth-child(4) { --r: 2deg; }
-
-    .nav a:hover {
-      animation: wiggle 0.5s;
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      25% { transform: rotate(-2deg) scale(1.05); }
-      50% { transform: rotate(2deg) scale(1.05); }
-      75% { transform: rotate(-2deg) scale(1.05); }
-    }
-
-    @keyframes idle-pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    .homework {
-      margin-top: 40px;
-      max-width: 100%;
-      background: rgba(255,255,255,0.8);
-      border: 1px dashed #c2a35b;
-      padding: 16px;
-      border-radius: 8px;
-    }
-
-    .homework h2 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-      border-bottom: 2px dashed #c2a35b;
-    }
-
-    .tasks {
-      font-size: 1.2rem;
-      line-height: 2rem;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .tasks li {
-      position: relative;
-      margin: 10px 0;
-      padding-left: 32px;
-      cursor: pointer;
-      transition: opacity 0.3s, transform 0.3s;
-    }
-
-    .tasks li::before {
-      content: '📝';
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    .tasks li:hover {
-      transform: scale(1.03);
-    }
-
-    .tasks li.done {
-      text-decoration: line-through;
-      opacity: 0.5;
-      animation: task-wiggle 0.5s;
-    }
-
-    @keyframes task-wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-1deg); }
-      75% { transform: rotate(1deg); }
-    }
-
-    /* Mobile first design tweaks */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      .nav a {
-        font-size: 1rem;
-        padding: 10px;
-      }
-
-      .homework h2 {
-        font-size: 1.4rem;
-      }
-
-      .tasks {
-        font-size: 1rem;
-      }
-
-      body::before {
-        left: 20px;
-      }
-
-      .container {
-        padding-left: 20px;
-      }
-    }
   </style>
 </head>
 <body>
+  <label class="theme-switch">
+    <span>🌞</span>
+    <input type="checkbox" id="theme-toggle" />
+    <span class="slider"></span>
+    <span>🌜</span>
+  </label>
+
   <div class="container">
     <h1>BECOMING ME</h1>
-
     <div class="nav">
       <a href="index.html">Home</a>
       <a href="diet.html">Diet</a>
       <a href="exercises.html">Exercises</a>
       <a href="contact.html">Contact</a>
     </div>
-
     <div class="homework">
       <h2>HOMEWORK</h2>
       <ul class="tasks" id="tasks">
@@ -195,9 +124,24 @@
   </div>
 
   <script>
-    document.querySelectorAll('#tasks li').forEach(li =>
-      li.addEventListener('click', () => li.classList.toggle('done'))
-    );
+    // Load saved theme or OS preference
+    const toggle = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      root.setAttribute('data-theme', saved);
+      toggle.checked = saved === 'dark';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      root.setAttribute('data-theme','dark');
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+      const newTheme = toggle.checked ? 'dark' : 'light';
+      root.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
   </script>
 </body>
 </html>
+
